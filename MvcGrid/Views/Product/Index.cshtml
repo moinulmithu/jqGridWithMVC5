@@ -1,0 +1,35 @@
+﻿
+<div class="container">
+    @{
+        ViewBag.Title = "Index";
+    }
+    <script src="~/Scripts/jquery-1.10.2.js"></script>
+    <h2 class="breadcrumb">Product Page</h2>
+    <div id="Direction">
+        @Html.DropDownList("ProductID",string.Empty)
+    </div>
+</div>
+<div id="LoadView">
+        <table id="grid"></table>
+        <div id="pager"></div>
+    </div>
+
+<script>
+        $(document).ready(function () {
+            var firstValue = $("#Direction").val();
+            alert(firstValue);
+            $('#LoadView').load('@Url.Action("LoadProduct", "Product")?page=' + 1);
+            $("#Direction").change(function () {
+                var value = $("#Direction").val();
+                alert(value);
+                $.ajax({
+                    type: 'POST',
+                    data: {},
+                    success: function () {
+                        $('#LoadView').load('@Url.Action("LoadProduct", "Product")?page=' + 1);
+                    },
+                    error: function () { alert(error); }
+                });
+            });
+        });
+    </script>
